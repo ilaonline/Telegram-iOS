@@ -26,9 +26,8 @@ jobs:
 
       - name: Build unsigned IPA
         env:
-          config["api_id"] = os.environ["TG_API_ID"]
-          config["api_hash"] = os.environ["TG_API_HASH"]
-          config["sg_config"] = ""
+          TG_API_ID: ${{ secrets.TG_API_ID }}
+          TG_API_HASH: ${{ secrets.TG_API_HASH }}
         run: |
           set -euo pipefail
 
@@ -46,6 +45,7 @@ jobs:
 
           config["api_id"] = os.environ["TG_API_ID"]
           config["api_hash"] = os.environ["TG_API_HASH"]
+          config["sg_config"] = ""
 
           with open(path, "w", encoding="utf-8") as file:
               json.dump(config, file, indent="\t")
@@ -53,7 +53,6 @@ jobs:
           PY
 
           BUILD_NUMBER_OFFSET="$(cat build_number_offset)"
-          APP_VERSION="$(python3 -c 'import json; print(json.load(open("versions.json"))["app"])')"
           COMMIT_COUNT="$(git rev-list --count HEAD)"
           BUILD_NUMBER="$((COMMIT_COUNT + BUILD_NUMBER_OFFSET))"
 
