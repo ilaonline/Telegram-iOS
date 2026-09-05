@@ -69,7 +69,7 @@ jobs:
             --buildNumber="$BUILD_NUMBER"
 
           mkdir -p build/artifacts
-          IPA="$(find bazel-out -path '*/bin/Telegram/Telegram.ipa' -type f -print -quit)"
+          IPA="$(find bazel-bin -path '*/Telegram/Swiftgram.ipa' -type f -print -quit)"
           test -n "$IPA"
           cp "$IPA" build/artifacts/Telegram-X-unsigned.ipa
 
